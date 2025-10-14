@@ -19,7 +19,7 @@ Array.prototype.heroesRender = function (folderName) {
     <td>${hero.name}</td>
     <td>
       <img
-        src="./images/${folderName}/${hero.name
+        src="../HomeWork-2/images/${folderName}/${hero.name
         .split(" ")
         .join("")
         .toLowerCase()}.svg"
