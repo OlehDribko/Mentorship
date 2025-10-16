@@ -36,6 +36,10 @@ Array.prototype.heroesRender = function (folderName) {
 };
 
 tabletSelector.insertAdjacentHTML("afterbegin", dcHeroes.heroesRender("dc"));
+tabletSelector.insertAdjacentHTML(
+  "afterbegin",
+  marvelHeroes.heroesRender("marvel")
+);
 {
   /* <img src="../images/dc/batman.svg"></img>; */
 }
