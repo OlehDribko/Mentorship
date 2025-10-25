@@ -1,0 +1,18 @@
+.btn-container {
+  width: 100%;
+  display: flex;
+  gap: 140px;
+  justify-content: center;
+  align-items: center;
+}
+.btn-container button {
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  border: 1px solid;
+  font-size: 36px;
+  font-weight: 700px;
+}
+.btnChange {
+  color: red;
+}

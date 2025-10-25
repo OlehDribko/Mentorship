@@ -28,8 +28,6 @@ const arr = ["1", "2", "3", "4"];
 
 console.log(arr.myMap((arr, index, array) => arr * 2));
 
-// console.log(arr.map());
-
 function foo() {
   let value = 0;
 
