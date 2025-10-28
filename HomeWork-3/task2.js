@@ -1,56 +1,85 @@
 const documentCub = document.querySelector(".cub-container");
+const main = document.querySelector("main");
+const div = document.createElement("div");
+const button = document.createElement("button");
+
+const STEP = 50;
+let intervalId = null;
 
 function renderCub() {
-  return `
-        <div class="cub">
-    </div>`;
-}
+  div.classList.add("cub");
+  documentCub.appendChild(div);
 
+  return div;
+}
+renderCub();
 function renderBtn() {
-  return `<button class="startBtn" type="button">Pres Start</button>`;
+  button.classList.add("startBtn");
+  button.textContent = "Pres Start";
+  button.type = "button";
+  main.append(button);
+  return button;
 }
+renderBtn();
 
-documentCub.insertAdjacentHTML("beforeend", renderCub());
-documentCub.insertAdjacentHTML("afterend", renderBtn());
-
+function fixCub() {}
 const cub = document.querySelector(".cub");
 const startGameBtn = document.querySelector(".startBtn");
 
 let y = cub.offsetTop;
 let x = cub.offsetLeft;
-
-const maxX = documentCub.clientWidth - cub.offsetWidth;
-const maxY = documentCub.clientHeight - cub.offsetHeight;
-
-const STEP = 50;
+// спробвати інкапсулювати.
+function getBounds() {
+  const maxX = documentCub.clientWidth - cub.offsetWidth;
+  const maxY = documentCub.clientHeight - cub.offsetHeight;
+  return { maxX, maxY };
+}
+function getPositionCub() {
+  const y = cub.offsetTop;
+  const x = cub.offsetLeft;
+  return { y, x };
+}
+function setPositionCub(x, y) {
+  cub.style.left = `${x}px`;
+  cub.style.top = `${y}px`;
+}
 
 document.body.onkeydown = (event) => {
-  documentCub.clientHeight;
+  const { maxX, maxY } = getBounds();
+  let { x, y } = getPositionCub();
+  const atBottom = y >= maxY;
 
-  console.log(event.key);
-  if (event.key === "ArrowRight" && x < maxX) x += STEP;
-  if (event.key === "ArrowLeft" && x > 0) x -= STEP;
+  if (event.key === "ArrowRight" && x < maxX && !atBottom) x += STEP;
+  if (event.key === "ArrowLeft" && x > 0 && !atBottom) x -= STEP;
   if (event.key === "ArrowDown" && y < maxY) y += STEP;
 
-  cub.style.left = x + "px";
-  cub.style.top = y + "px";
+  setPositionCub(x, y);
+
   event.preventDefault();
-  console.log(`x:${x}, y:${y}`);
 };
 
-let intervalId = null;
-
-startGameBtn.addEventListener("click", startGame);
+function stopGame() {
+  if (intervalId !== null) {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+}
 
 function startGame() {
   if (intervalId) return;
-  console.log(y);
+
   intervalId = setInterval(() => {
-    if (y >= maxY - STEP) {
-      clearInterval(intervalId);
-      intervalId = null;
+    const { maxY } = getBounds();
+    let { x, y } = getPositionCub();
+    if (y >= maxY) {
+      y = maxY;
+      cub.style.top = `${y}px`;
+      stopGame();
+      return;
     }
     y += STEP;
-    cub.style.top = y + "px";
+    setPositionCub(x, y);
   }, 1000);
 }
+startGameBtn.addEventListener("click", startGame);
+// Попрацювати з структурою.

@@ -1,5 +1,7 @@
 const myDocument = document.querySelector(".btn-container");
 const documentBody = document.querySelector("body");
+
+//змінити на рендер через createElement.
 const renderBtn = () => {
   return `
    
@@ -17,11 +19,12 @@ const stopChangeColorBtn = document.querySelector(".btnStop");
 const onChangeBtn = document.querySelector(".btn-change");
 let intervalId = null;
 
+function getRandomNumber() {
+  return Math.floor(Math.random() * 256);
+}
+
 function randomColor() {
-  const red = Math.floor(Math.random() * 256);
-  const green = Math.floor(Math.random() * 256);
-  const blue = Math.floor(Math.random() * 256);
-  return `rgb(${red}, ${green}, ${blue})`;
+  return `rgb(${getRandomNumber()}, ${getRandomNumber()}, ${getRandomNumber()})`;
 }
 
 function changeColor() {
